@@ -42,8 +42,8 @@ class WarehouseController extends Controller
     public function edit($id)
     {
         if (Warehouse::find($id)->exists()) {
-            $warehouse = Warehouse::getWarehouseById($id);
-            return view('warehouses.edit',compact('warehouse'));
+            $data = Warehouse::getWarehouseById($id);
+            return view('warehouses.edit',compact('data'));
         }
         else {
             session()->flash('error', 'Store not found');
@@ -64,7 +64,7 @@ class WarehouseController extends Controller
 
         ]);
         $data =$request->all();
-        StoreWarehouse::putWarehouse($data,$id);
+        Warehouse::putWarehouse($data,$id);
         session()->flash('success', 'Store Details updated.');
         return redirect('/api/getWarehouses');
     }

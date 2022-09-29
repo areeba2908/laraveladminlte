@@ -55,7 +55,7 @@ Route::get('/addWarehouse','WarehouseController@createForm');
 
 Route::post('/createWarehouse','WarehouseController@create');
 
-Route::get('/editWarehouse','WarehouseController@edit');
+Route::get('/editWarehouse/{id}','WarehouseController@edit');
 
 Route::put('/putWarehouse/{id}','WarehouseController@update');
 
@@ -69,8 +69,8 @@ Route::get('/addWarehouseCategory','WarehouseCategoryController@createForm');
 
 Route::post('/createWarehouseCategory','WarehouseCategoryController@create');
 
-Route::get('/editWarehouse/{id}','WarehouseCategoryController@edit');
+Route::get('/editWarehouseCategory/{id}','WarehouseCategoryController@edit');
 
 Route::put('/putWarehouseCategory/{id}','WarehouseCategoryController@update');
 
-Route::delete('/deleteWarehouseCategorys/{id}','WarehouseCategoryController@delete');
+Route::delete('/deleteWarehouseCategory/{id}','WarehouseCategoryController@delete');

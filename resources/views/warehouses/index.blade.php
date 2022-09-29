@@ -44,14 +44,14 @@
                                     </div>
                                     <div class="mt-3">
                                         <form action="{{url('/api/deleteWarehouse/')}}/{{$warehouse->id}}" method="post">
-                                            <input class="btn btn-info" type="submit" value="Delete" />
+                                            <input class="btn btn-danger btn-sm" type="submit" value="Delete" />
                                             @method('delete')
                                             @csrf
                                         </form>
                                     </div>
                                     <div class="mt-3">
                                         <a href="{{url('/api/editWarehouse/')}}/{{$warehouse->id}}" >
-                                            <input class="btn btn-info" value="Edit" />
+                                            <input  type="button" class="btn btn-info btn-sm" value="Edit" />
                                         </a>
                                     </div>
                                 </div>
