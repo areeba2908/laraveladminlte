@@ -3,20 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use APP\Warehouse;
+use App\Warehouse;
 
 class WarehouseController extends Controller
 {
     public function index()
     {
         $warehouses = Warehouse::getWarehouses();
-        return [$warehouses];
-        //return view('users.stores', compact('stores'));
+        return view('warehouses.index', compact('warehouses'))->with('errors');
     }
+
+//    public function getStoreWarehouses($id)
+//    {
+//        $data = Store::find($id)->getCustomers;
+//
+//
+//        //$stores = Store::getStores();
+//        //return [$stores]; //postman test
+//        return view('stores.storeUsers', compact('data'));
+//    }
 
     public function createForm()
     {
-        return view('stores.create');
+        return view('warehouses.create');
     }
 
     public function create(Request $request)
@@ -25,22 +34,20 @@ class WarehouseController extends Controller
             'name'=>'required',
         ]);
         Warehouse::createWarehouse($request);
-        //session()->flash('success', 'Store Successfully Registered');
-        return['store created'];
-        //return redirect('/stores');
+        session()->flash('success', 'Warehouse Successfully Registered');
+        return redirect('/api/getWarehouses');
 //
     }
 
     public function edit($id)
     {
-        if (Warehouse::where('id', $id )->exists()) {
-            $store = Warehouse::getStoreById($id);
-            $data = compact('store');
-            return view('users.edit')->with($data);
+        if (Warehouse::find($id)->exists()) {
+            $warehouse = Warehouse::getWarehouseById($id);
+            return view('warehouses.edit',compact('warehouse'));
         }
         else {
             session()->flash('error', 'Store not found');
-            return redirect('/stores');
+            return redirect('/api/getWarehouses');
         }
     }
 
@@ -57,25 +64,23 @@ class WarehouseController extends Controller
 
         ]);
         $data =$request->all();
-        Warehouse::putWarehouse($data,$id);
-        return ['store updated'];
-//        session()->flash('success', 'Store Details updated.');
-//        return  redirect('/stores');
+        StoreWarehouse::putWarehouse($data,$id);
+        session()->flash('success', 'Store Details updated.');
+        return redirect('/api/getWarehouses');
     }
 
     public function delete($id)
     {
         if (Warehouse::where('id', $id )->exists()) {
-            $Warehouse = Warehouse::getStoreByslug($id);
-            Warehouse::deleteWarehouse($Warehouse);
-            session()->flash('success', 'Store deleted.');
-            return ["store deleted"];
-            //return redirect('/stores');
+            $warehouse = Warehouse::getWarehouseById($id);
+            Warehouse::deleteWarehouse($warehouse);
+            session()->flash('success', 'Warehouse deleted.');
+            return redirect('/api/getWarehouses');
         }
         else {
             session()->flash('error', 'Store not found');
-            return ["store id not found"];
-            //return redirect('/users');
+            //return ["store id not found"];
+            return redirect('/api/getWarehouses');
         }
     }
 }

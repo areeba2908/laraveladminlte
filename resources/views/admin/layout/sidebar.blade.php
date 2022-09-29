@@ -27,7 +27,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fab fa-odnoklassniki"></i>
+                        <i class="fas fa-user-cog"></i>
                         <p>
                             Account Management
                             <i class="fas fa-angle-left right"></i>
@@ -45,7 +45,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fab fa-odnoklassniki"></i>
+                        <i class="fa fa-fw fa-user"></i>
                         <p>
                             Customers
                             <i class="fas fa-angle-left right"></i>
@@ -63,7 +63,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fab fa-odnoklassniki"></i>
+                        <i class="fas fa-cart-arrow-down"></i>
                         <p>
                             Stores
                             <i class="fas fa-angle-left right"></i>
@@ -71,9 +71,36 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{url('/api/getStores')}}" class="nav-link {{ Request::is('/api/stores') ? 'active' : '' }}">
+                            <a href="{{url('/api/getStores')}}" class="nav-link {{ Request::is('/api/getStores') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Stores Profile</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-fw fa-home"></i>
+                        <p>
+                            Warehouses
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('/api/getWarehouses')}}" class="nav-link {{ Request::is('/api/getWarehouses') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Warehouses Profile</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('/api/getWarehouseCategories')}}" class="nav-link {{ Request::is('/api/getWarehouseCategories') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Warehouses Categories</p>
                             </a>
                         </li>
                     </ul>

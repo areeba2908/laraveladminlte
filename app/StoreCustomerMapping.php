@@ -8,7 +8,5 @@ class StoreCustomerMapping extends Model
 {
     protected $table = 'stores_customers';
 
-    protected $fillable = [
-        'name','slug','status'
-    ];
+
 }

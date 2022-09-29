@@ -19,15 +19,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //STORES
-Route::get('/getStores','StoreController@index');
+Route::get('/getStores','StoreController@index')->name('stores.list');
 
 Route::get('/getStoreCustomers/{id}','StoreController@getstoreCustomers');
 
-Route::post('/postStore','StoreController@create');
+Route::get('/getStoreWarehouses/{id}','StoreController@getStoreWarehouses');
 
-Route::put('/putStore/{slug}','StoreController@update');
+Route::get('/addStore','StoreController@createForm')->name('stores.add');
 
-Route::delete('/deleteStore/{slug}','StoreController@delete');
+Route::post('/createStore','StoreController@create')->name('stores.create');
+
+Route::get('/editStore/{id}','StoreController@edit')->name('stores.edit');
+
+Route::put('/putStore/{id}','StoreController@update')->name('stores.put');
+
+Route::delete('/deleteStore/{id}','StoreController@delete')->name('stores.delete');
 
 //CUSTOMERS
 Route::get('/customers','CustomerController@index')->name('customers');
@@ -45,17 +51,26 @@ Route::delete('/deleteCustomer/{id}','CustomerController@delete')->name('custome
 //WAREHOUSES
 Route::get('/getWarehouses','WarehouseController@index');
 
-Route::post('/postWarehouse','WarehouseController@create');
+Route::get('/addWarehouse','WarehouseController@createForm');
+
+Route::post('/createWarehouse','WarehouseController@create');
+
+Route::get('/editWarehouse','WarehouseController@edit');
 
 Route::put('/putWarehouse/{id}','WarehouseController@update');
 
 Route::delete('/deleteWarehouse/{id}','WarehouseController@delete');
 
+
 //WAREHOUSE CATEGORIES
-Route::get('/getWarehouseCategories','WarehouseCategoriesController@index');
+Route::get('/getWarehouseCategories','WarehouseCategoryController@index');
 
-Route::post('/postWarehouseCategories','WarehouseCategoriesController@create');
+Route::get('/addWarehouseCategory','WarehouseCategoryController@createForm');
 
-Route::put('/putWarehouseCategories/{id}','WarehouseCategoriesController@update');
+Route::post('/createWarehouseCategory','WarehouseCategoryController@create');
 
-Route::delete('/deleteWarehouseCategories/{id}','WarehouseCategoriesController@delete');
+Route::get('/editWarehouse/{id}','WarehouseCategoryController@edit');
+
+Route::put('/putWarehouseCategory/{id}','WarehouseCategoryController@update');
+
+Route::delete('/deleteWarehouseCategorys/{id}','WarehouseCategoryController@delete');

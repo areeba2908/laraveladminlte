@@ -8,7 +8,34 @@
 
     @include('admin.layout.flashmessages')
 
+@section('content')
 
+
+    <div class="card-body">
+        <form method="post" action="{{ url('/api/createStore') }}">
+            <div class="form-group">
+                @csrf
+                <label for="name">Store Name</label>
+                <input type="text" class="form-control" name="name"/>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Slug</label>
+                <input type="text" class="form-control" name="slug"/>
+
+            </div>
+            <div class="form-group">
+            <select name="status" id="status">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+            </br>
+            </div>
+
+            <button type="submit" class="btn btn-block btn-danger">Create Store</button>
+        </form>
+    </div>
+@endsection
 
 
 @endsection

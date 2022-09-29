@@ -1,7 +1,7 @@
 @extends('admin.layout.dashboard')
 
 @section('page-heading')
-    Warehouse Form
+    Warehouse Category Form
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
 
     <div class="card-body" >
 
-        {{ Form::open(array('url' => '/api/createWarehouse','id'=>'WarehouseForm','method' => 'POST', 'enctype' => 'multipart/form-data')) }}
+        {{ Form::open(array('url' => '/api/createWarehouseCategory','id'=>'WarehouseForm','method' => 'POST', 'enctype' => 'multipart/form-data')) }}
 
         @csrf
         <div class="form-group">
@@ -24,8 +24,8 @@
         </div>
 
         <div class="form-group">
-            {{Form::label('location', 'Location', ['class' => 'awesome'])}}
-            {{Form::text('location', '', ['class' => 'form-control'])}}
+            {{Form::label('slug', 'Slug', ['class' => 'awesome'])}}
+            {{Form::text('slug', '', ['class' => 'form-control'])}}
             {{--<span class="text-danger">@error('email'){{ $message }} @enderror</span>--}}
         </div>
 

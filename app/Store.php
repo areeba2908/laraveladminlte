@@ -13,9 +13,14 @@ class Store extends Model
         'name','slug','status'
     ];
 
-    public function getCustomers() //one
+    public function getStoreWithCustomers() //one
     {
         return $this->belongsToMany(Customer::class, 'stores_customers');
+    }
+
+    public function getStoreWithWarehouses() //one
+    {
+        return $this->belongsToMany(Warehouse::class, 'stores_warehouses');
     }
 
     public static function getStores(){
@@ -26,18 +31,34 @@ class Store extends Model
         return Store::where('slug', $slug)->first();
     }
 
+    public static function getStoreById ($id) {
+        return Store::find($id);
+    }
+
     public static function createStore ($request){
+        if ($request['status']=='online'){
+            $status=1;
+        }
+        else{
+            $status=0;
+        }
         Store::create(array('name'=>$request['name'],
             'slug'=>$request['slug'],
-            'status'=>$request['status'],
+            'status'=>$status,
         ));
     }
 
-    public static function putStore ($request,$slug){
-        $store = Store::where('slug', $slug)->first();
+    public static function putStore ($request,$id){
+        if ($request['status']=='active'){
+            $status=1;
+        }
+        else{
+            $status=0;
+        }
+        $store = Store::find($id);
         $store->name = $request['name'];
         $store->slug = $request['slug'];
-        $store->status = $request['status'];
+        $store->status = $status;
         $store->save();
     }
 
