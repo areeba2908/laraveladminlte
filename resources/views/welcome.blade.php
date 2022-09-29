@@ -1,8 +1,10 @@
 @extends('admin.layout.dashboard')
-@section('page-heading')
-    WELCOME TO CUSTOMERS PORTAL
-@endsection
 
+@include('admin.layout.preloader')
+
+@section('page-heading')
+    WELCOME TO SHOPPING PORTAL
+@endsection
 
 @section('custom-scripts')
 

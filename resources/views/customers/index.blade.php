@@ -8,7 +8,7 @@
     @include('admin.layout.flashmessages')
     <div class="container">
         <div class="text-right">
-            <a href="{{url('/addCustomer')}}"><button  class="btn btn-info">Create Customer</button></a>
+            <a href="{{url('/api/addCustomer')}}"><button  class="btn btn-info">Create Customer</button></a>
         </div>
         <table class="table table-bordered data-table">
             <thead>
@@ -121,7 +121,7 @@
                 });
                 $.ajax({
                     type: "DELETE",
-                    url: '/deleteCustomer' + '/' + id,
+                    url: '/api/deleteCustomer' + '/' + id,
                     success: function(data) {
                         alert(data.success);
                         window.location.href = "/customers";
@@ -143,7 +143,7 @@
                 if (confirm("Are You sure want to edit !")) {
                     $.ajax({
                         type: "GET",
-                        url: '/editCustomer' + '/' + id,
+                        url: '/api/editCustomer' + '/' + id,
                         success: function (data) {
 //                            alert("customer Found Now you can edit Form");
                             $('#modelHeading').html("Edit Book");
@@ -181,7 +181,7 @@
 
             $.ajax({
                 type: "POST",
-                url: '/updateCustomer' + '/' + id,
+                url: '/api/updateCustomer' + '/' + id,
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -194,7 +194,7 @@
                         });
                     } else if (response.status == 200) {
                         alert(response.success);
-                        window.location.href = "/customers";
+                        window.location.href = "/api/customers";
                     }
                 },
 

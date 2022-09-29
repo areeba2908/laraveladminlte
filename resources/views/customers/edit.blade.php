@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    @include('admin.layout.flashmessages')
+
     <div class="container">
     <div class="card-body">
 
@@ -77,7 +77,7 @@
                     $('#submit').html('Please Wait...');
                     $("#submit"). attr("disabled", true);
                     $.ajax({
-                        url: "{{URL('/updateTwoCustomer/'.$customer->id)}}",
+                        url: "{{URL('/api/updateTwoCustomer/'.$customer->id)}}",
                         //url: '/updateTwoCustomer' + '/' + $data->id,
                         type: "POST",
                         data: $('#customerEditForm').serialize(),
@@ -88,7 +88,7 @@
                                 alert(response.success);
                                 console.log("success error:", response.success);
                                 //document.getElementById("customerForm").reset();
-                                window.location.href = "/customers";
+                                window.location.href = "/api/customers";
                             }
                             else if (response.status == 400) {
                                 alert(response.success);

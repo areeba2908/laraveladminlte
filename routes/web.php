@@ -12,9 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 
@@ -52,3 +55,7 @@ Route::get('/editTwoCustomer/{id}','CustomerController@editTwo'); //open form fo
 //
 Route::post('/updateTwoCustomer/{id}', 'CustomerController@updateTwo');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -4,11 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Customer extends Model
 {
+    protected $table = 'customers';
     protected $fillable = [
         'name', 'email', 'phonenumber', 'status'
     ];
+
+    public function getStore() //one
+    {
+        return $this->belongsToMany(Store::class, 'stores_customers');
+    }
 
     public static function getCustomers(){
         return Customer::all();

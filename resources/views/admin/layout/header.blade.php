@@ -15,6 +15,6 @@
 
 
 
-    <link rel="stylesheet" href="{{ mix('css/master.css') }}">
+    <link rel="stylesheet" href="{{ mix('/css/master.css') }}">
     <script src="{{ mix('js/master.js') }}"></script>
 </head>

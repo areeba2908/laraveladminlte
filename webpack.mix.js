@@ -54,5 +54,3 @@ mix.scripts([
     path.js + 'plugins/tempusdominus-bootstrap-4.min.js',
     // path.jss + 'custom',
 ], 'public/js/master.js').version();
-
-

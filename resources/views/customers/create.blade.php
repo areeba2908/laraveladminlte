@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    @include('admin.layout.flashmessages')
+
     <div class="card-body" >
 
         {{ Form::open(array('id'=>'customerForm','method' => 'POST', 'enctype' => 'multipart/form-data')) }}
@@ -13,26 +13,26 @@
         <div class="form-group">
             {{Form::label('name', 'Name', ['class' => 'awesome'])}}
             {{Form::text('name', '', ['class' => 'form-control'  ,'placeholder' => 'Enter name'])}}
-            <span class="text-danger">@error('name'){{ $message }} @enderror</span>
+            {{--<span class="text-danger">@error('name'){{ $message }} @enderror</span>--}}
         </div>
 
         <div class="form-group">
             {{Form::label('email', 'Email', ['class' => 'awesome'])}}
             {{Form::text('email', '', ['class' => 'form-control'  ,'placeholder' => 'Enter email'])}}
-            <span class="text-danger">@error('email'){{ $message }} @enderror</span>
+            {{--<span class="text-danger">@error('email'){{ $message }} @enderror</span>--}}
         </div>
 
         <div class="form-group">
             {{Form::label('phonenumber', 'Phone Number', ['class' => 'awesome'])}}
             {{Form::text('phonenumber', '', ['class' => 'form-control'  ,'placeholder' => 'Enter phone no.'])}}
-            <span class="text-danger">@error('phonenumber'){{ $message }} @enderror</span>
+            {{--<span class="text-danger">@error('phonenumber'){{ $message }} @enderror</span>--}}
         </div>
 
         <div class="form-group">
             {{ Form::label('status','Status', ['class' => 'awesome'])}}
             {{Form::select('status',['online'=>'online','offline'=>'offline'], ['id' => 'status'])}}
             {{--{{Form::number('number','number')}}--}}
-            <span class="text-danger">@error('status'){{ $message }} @enderror</span>
+            {{--<span class="text-danger">@error('status'){{ $message }} @enderror</span>--}}
         </div>
 
         <button id="submit" class="btn btn-primary">Submit</button>
@@ -74,7 +74,7 @@
                     $('#submit').html('Please Wait...');
                     $("#submit"). attr("disabled", true);
                     $.ajax({
-                        url: "{{url('/createCustomer')}}",
+                        url: "{{url('/api/createCustomer')}}",
                         type: "POST",
                         data: $('#customerForm').serialize(),
                         success: function( response ) {
@@ -84,7 +84,7 @@
                                 alert(response.success);
                                 console.log("success error:", response.success);
                                 //document.getElementById("customerForm").reset();
-                                window.location.href = "/customers";
+                                window.location.href = "/api/customers";
                             }
                             else if (response.status == 400) {
                                 $.each(response.success, function(key,value) {

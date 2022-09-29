@@ -2,20 +2,20 @@
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
         <img src="{{asset ('img/logo.jpg')}}" alt="Library Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">Customers Portal</span>
+        <span class="brand-text font-weight-light">SHOPPING PORTAL</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="{{asset ('img/avatar2.png')}}" class="img-circle elevation-2" alt="User Image">
-            </div>
-            <div class="info">
-                <a href="#" class="d-block">Areeba Ayub</a>
-            </div>
-        </div>
+        {{--<div class="user-panel mt-3 pb-3 mb-3 d-flex">--}}
+            {{--<div class="image">--}}
+                {{--<img src="{{asset ('img/avatar2.png')}}" class="img-circle elevation-2" alt="User Image">--}}
+            {{--</div>--}}
+            {{--<div class="info">--}}
+                {{--<a href="#" class="d-block">{{ Auth::user()->name }}</a>--}}
+            {{--</div>--}}
+        {{--</div>--}}
 
 
 
@@ -37,7 +37,7 @@
                             <li class="nav-item">
                                 <a href="{{url('/users')}}" class="nav-link {{ Request::is('users') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Users</p>
+                                    <p>Admin Users</p>
                                 </a>
                             </li>
                         </ul>
@@ -53,9 +53,27 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{url('/customers')}}" class="nav-link {{ Request::is('customers') ? 'active' : '' }}">
+                            <a href="{{url('/api/customers')}}" class="nav-link {{ Request::is('/api/customers') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>profile</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fab fa-odnoklassniki"></i>
+                        <p>
+                            Stores
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('/api/getStores')}}" class="nav-link {{ Request::is('/api/stores') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Stores Profile</p>
                             </a>
                         </li>
                     </ul>
