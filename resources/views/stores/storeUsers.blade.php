@@ -10,7 +10,7 @@
 
     <div class="card shadow-0 border" style="background-color: #f0f2f5;">
         {{--<div class="text-right">--}}
-            {{--<a href="{{url('/allowUser')}}"><button  class="btn btn-info">Create Store</button></a>--}}
+            {{--<a href="{{url('/allowCustomerToStore')}}"><button  class="btn btn-info"></button></a>--}}
         {{--</div>--}}
         <div class="card-body p-4">
             <table class="table" id="table_id">

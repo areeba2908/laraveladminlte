@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Closure;
 
 class Authenticate extends Middleware
 {
@@ -14,8 +15,24 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
+
+        if ( !($request->expectsJson())) {
+            //$request->session()->flash('error', 'Error message!');
             return route('login');
         }
+
+
+
+    }
+
+    protected function unauthenticated($request, array $guards)
+    {
+
+        return response()->json([
+            'status'    =>  414,
+            'message'   =>  'authentication error',
+            'body'      =>  [],
+            'exception' =>  []
+        ], 414, [], JSON_UNESCAPED_UNICODE );
     }
 }

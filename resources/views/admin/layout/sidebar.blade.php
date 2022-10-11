@@ -35,7 +35,7 @@
                     </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{url('/users')}}" class="nav-link {{ Request::is('users') ? 'active' : '' }}">
+                                <a href="{{url('/api/users')}}" class="nav-link {{ Request::is('users') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Admin Users</p>
                                 </a>

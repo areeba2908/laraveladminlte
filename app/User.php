@@ -5,10 +5,14 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Laravel\Passport\HasApiTokens;
+use Laravel\Passport\Token;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +40,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public static function createUserToken($user){
+        $oldTokens = $user->tokens;
+        foreach ($oldTokens as $token){
+            $token->revoke();
+        }
+        $accessToken = Auth::user()->createToken($user->id)->accessToken;
+        return $accessToken;
+    }
+
+    public function getStore() //one
+    {
+        return $this->belongsToMany(Store::class, 'stores_users');
+    }
+
+    public static function getUserByEmail($email) {
+        return User::where('email', $email)->first();
+    }
 
     public static function getUsers(){
         return User::all();

@@ -5,15 +5,18 @@ Users Profile
 
 @section('content')
     <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+        {{--@role('admin')--}}
+
             <div class="text-right">
                 <a href="{{url('/addUser')}}"><button  class="btn btn-info">Create User</button></a>
             </div>
+        {{--@endrole--}}
         <div class="card-body p-4">
             <table class="table" id="table_id">
                 <thead>
                 <tr class="table-warning">
                     <td>ID</td>
-                    <td>Name</td>
+                    <td>{{Auth::user()->name}}</td>
                     <td>Email</td>
                     <td class="text-center">Action</td>
                 </tr>

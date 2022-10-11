@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Store;
-use App\Customer;
+use App\Warehouse;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -25,25 +26,61 @@ class StoreController extends Controller
     public function getStoreWarehouses($id)
     {
         $data = Store::find($id)->getStoreWithWarehouses;
+        $store_id = $id;
+        //echo ($data);
         //return [$stores]; //postman test
-        return view('stores.storeWarehouses', compact('data'));
+        return view('stores.storeWarehouses', compact('data','store_id'));
+    }
+
+    public function getAssignWarehouseForm($id){
+        $store=Store::find($id);
+        $warehouses= Warehouse::getWarehouses();
+        return view('stores.assignWarehouseForm', compact('store','warehouses'));
+    }
+
+    public function postWarehouseStoreForm($id, Request $request){
+        DB::transaction(function($id, $request) {
+
+            $store = Store::find($id);
+            $warehouse = [$request['warehouse']]; //you can pass more warehouses from frontend to here
+            $store->getStoreWithWarehouses()->attach($warehouse);
+            return redirect('/api/getStoreWarehouses/' . $store->id);
+        });
     }
 
     public function createForm()
     {
-        return view('stores.create');
+        $warehouses=Warehouse::getWarehouses();
+        return view('stores.create',compact('warehouses'));
     }
 
     public function create(Request $request)
     {
-        $request->validate([
-            'name'=>'required',
-            'slug'=>'required|unique:stores,slug',
-        ]);
-        Store::createStore($request);
-        session()->flash('success', 'Store Successfully Registered');
-        //return['store created'];
-        return redirect('/api/getStores');
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                'name' => 'required',
+                'slug' => 'required|unique:stores,slug',
+            ]);
+            $store = Store::createStore($request);
+            $warehouses = $request->get('warehouses');
+            if (empty($warehouses)){
+                DB::commit();
+                return redirect('/api/getStores');
+            }
+            else{
+                $store->getStoreWithWarehouses()->attach($warehouses);
+                DB::commit();
+                return redirect('/api/getStores');
+            }
+            //session()->flash('success', 'Store Successfully Registered');
+            //return['store created'];
+
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            echo $e;
+        }
 //
     }
 

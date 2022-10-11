@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+//use Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,17 +15,51 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+//
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+//Route::middleware('customAuthentication')->group(function () {
+//    Route::get('/dashboard', 'HomeController@index');
+//    Route::get('/users','UserController@index')->name('users');
+//});
+
+
+Route::group(['middleware' => ['json.response','cors',]], function () {
+    Route::middleware('auth:api')->get('/users','UserController@index')->name('users');
+
+    Route::middleware('auth:api')->get('/dashboard', 'HomeController@index');
+
+    //STORES
+    Route::middleware('auth:api')->get('/getStores','StoreController@index')->name('stores.list');
+});
+
+//Route::get('/users','UserController@index')->name('users')->middleware('auth:api');
+
+Route::group(['middleware' => ['cors']], function () {
+    Route::post('/user-login', 'UserController@customLogin');
+
+    Route::post('/user-register', 'UserController@customRegister');
+
+    Route::post('/user-logout', 'UserController@customRegister')->name('logout');
+
+    Route::get('/testingroles','HomeController@testingRoles');
+});
+
+
+
+
 
 //STORES
-Route::get('/getStores','StoreController@index')->name('stores.list');
 
-Route::get('/getStoreCustomers/{id}','StoreController@getstoreCustomers');
 
-Route::get('/getStoreWarehouses/{id}','StoreController@getStoreWarehouses');
+Route::get('/getStoreCustomers/{id}','StoreController@getstoreCustomers'); //relationship //model //get
+
+Route::get('/getStoreWarehouses/{id}','StoreController@getStoreWarehouses'); //relationship //model //get
+
+Route::get('/getWarehouseStoreForm/{id}','StoreController@getAssignWarehouseForm'); //relationship //model //insert
+
+Route::post('/postWarehouseStoreForm/{id}','StoreController@postWarehouseStoreForm'); //relationship //model //post
 
 Route::get('/addStore','StoreController@createForm')->name('stores.add');
 
@@ -47,6 +83,7 @@ Route::get('/editCustomer/{id}','CustomerController@edit'); //open form for edit
 Route::post('/updateCustomer/{id}', 'CustomerController@update'); //update in database
 //
 Route::delete('/deleteCustomer/{id}','CustomerController@delete')->name('customer.delete');
+
 
 //WAREHOUSES
 Route::get('/getWarehouses','WarehouseController@index');

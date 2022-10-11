@@ -137,7 +137,7 @@
 
 
 
-        //edit form
+        //edit form open
         $(document).on('click', '.editCustomer', function() {
                 var id = $(this).data("id");
                 if (confirm("Are You sure want to edit !")) {

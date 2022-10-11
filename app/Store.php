@@ -13,6 +13,11 @@ class Store extends Model
         'name','slug','status'
     ];
 
+    public function getStoreWithUsers() //one
+    {
+        return $this->belongsToMany(User::class, 'stores_users');
+    }
+
     public function getStoreWithCustomers() //one
     {
         return $this->belongsToMany(Customer::class, 'stores_customers');
@@ -42,7 +47,7 @@ class Store extends Model
         else{
             $status=0;
         }
-        Store::create(array('name'=>$request['name'],
+        return Store::create(array('name'=>$request['name'],
             'slug'=>$request['slug'],
             'status'=>$status,
         ));

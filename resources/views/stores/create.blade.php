@@ -25,12 +25,21 @@
 
             </div>
             <div class="form-group">
-            <select name="status" id="status">
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-            </select>
-            </br>
+                <select name="status" id="status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                </br>
             </div>
+
+            @foreach($warehouses as $warehouse)
+                <div class="form-group">
+                    <p>
+                    <input class="form-check-input big-checkbox" name="warehouses[]" type="checkbox" value="{{$warehouse->id}}" id="defaultCheck1">
+                        {{$warehouse->name}}
+                    </p>
+                </div>
+                    @endforeach
 
             <button type="submit" class="btn btn-block btn-danger">Create Store</button>
         </form>
