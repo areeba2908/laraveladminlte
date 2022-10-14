@@ -41,6 +41,15 @@
                                 </a>
                             </li>
                         </ul>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{url('/api/getAllRoles')}}" class="nav-link {{ Request::is('getAllRoles') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Roles</p>
+                                </a>
+                            </li>
+                        </ul>
                 </li>
 
                 <li class="nav-item">

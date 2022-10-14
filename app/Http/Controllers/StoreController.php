@@ -4,16 +4,34 @@ namespace App\Http\Controllers;
 use App\Store;
 use App\Warehouse;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
 {
+
     public function index()
     {
-        $stores = Store::getStores();
-        //return [$stores]; //postman test
-        return view('stores.index', compact('stores'))->with('errors');
+        try {
+            if (auth()->user()->hasRole('admin')) {
+                $role = Role::findByName('admin');
+                $stores = $role->stores;
+            } elseif (auth()->user()->hasRole('customer')) { //store id  role id
+                $role = Role::findByName('customer');
+                $stores = $role->stores;
+            } elseif (auth()->user()->hasRole('editor')) { //store id  role id
+                $role = Role::findByName('editor');
+                $stores = $role->stores;
+            }
+            else {
+                $stores = Store::all();
+            }
+            return view('stores.index', compact('stores'))->with('errors');
+        }
+        catch (\Exception $e){
+            echo 'Message: ' .$e->getMessage();
+        }
     }
 
     public function getStoreCustomers($id)

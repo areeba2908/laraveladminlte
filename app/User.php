@@ -10,6 +10,7 @@ use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\Token;
 use Illuminate\Support\Facades\Auth;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, HasRoles;

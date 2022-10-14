@@ -16,10 +16,15 @@ use Illuminate\Support\Facades\Route;
 //Users Login System
 Route::get('/addUser', 'UserController@createForm')->middleware('role:writer|admin');
 
-Route::get('/login',function() { return view('users.user_login.login'); })->name('login');
+Route::get('/login',function() {
+    return view('users.user_login.login');
+})->name('login');
 
-Route::get('/register',function(){ return view('users.user_login.register'); });
 
+Route::get('/register', 'UserController@registerPage');
+
+
+Route::get('/testingroles','HomeController@testingRoles');
 //Route::middleware('customAuthentication')->group(function () {
 //    Route::get('/dashboard', 'HomeController@index');
 //});

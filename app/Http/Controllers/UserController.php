@@ -10,6 +10,8 @@ use Laravel\Passport\TokenRepository;
 use Laravel\Passport\RefreshTokenRepository;
 use Laravel\Passport\Token;
 use Illuminate\Support\Facades\Cookie;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -26,6 +28,13 @@ class UserController extends Controller
     public function getAllUsers(){
         $users = User::getUsers();
         return view('users.index', compact('users'));
+    }
+
+    public function getUserRoles($id){
+        $user = User::getUserById($id);
+        $roles = $user->roles->all(); // $userRole = $user->roles->pluck('name','name')->all();
+//        dd([$roles]);
+        return view('users.roles', compact('roles'));
     }
 
     public function createForm()
@@ -94,6 +103,13 @@ class UserController extends Controller
         }
     }
     ////////////////////////////////////////////////////
+    ///
+    ///
+    public function registerPage(){
+        $roles=Role::all();
+        return view('users.user_login.register', compact('roles'));
+    }
+
     public function customLogin(Request $request)
     {
         try {
@@ -106,7 +122,7 @@ class UserController extends Controller
                 $token =   Token::where('name', $user->id)->first();
                  if ($token !=null) {
                      $accessToken= User::createUserToken($user);
-                     $minutes = 15;
+                     $minutes = 30;
                      //dd([request()->cookie('token')]);
                      return response()->json(['status'=>'200','success'=>'User Logged in.','user'=>Auth::user(),'token'=>$accessToken])->withCookie(cookie('accessToken', $accessToken, $minutes));
                  }
@@ -144,8 +160,10 @@ class UserController extends Controller
                 'password' => Hash::make($request->password) //Hash::make()
             ]);
 
+            $user->assignRole($request->input('roles')); //syncrole
+
             $accessToken = $user->createToken($user->id)->accessToken;
-            $minutes = 15;
+            $minutes = 30;
             return response()->json(['status'=>'200','success'=>'User Logged in.','user'=>Auth::user(),'token'=>$accessToken])->withCookie(cookie('accessToken', $accessToken, $minutes));
 
         }
@@ -155,12 +173,35 @@ class UserController extends Controller
     }
 
 
-    public function signOut(Request $request) {
-        $user= User::getUserByEmail($request->email);
-        echo $user;
-//        $token = $user->tokens->find($user->id);
-//        $token->revoke();
-        //return Redirect('/api/login');
+    public function userLogout(Request $request) {
+
+       $user= auth()->user();
+        $oldTokens = $user->tokens;
+        foreach ($oldTokens as $token){
+            $token->revoke();
+        }
+        return Redirect('/api_web/login');
+    }
+
+    public function guzzleGetRequest(){
+        $users = User::getUsers();
+        return response()->json(["data"=>$users]);
+    }
+
+    public function guzzlePostRequest(Request $request){
+        if ($request['status']=='active'){
+            $status=1;
+        }
+        else{
+            $status=0;
+        }
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'status' => $status,
+            'password' => Hash::make($request->password) //Hash::make()
+        ]);
+        return response()->json(["success"=>'user posted through post request']);
     }
 
 

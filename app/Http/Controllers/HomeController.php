@@ -27,30 +27,32 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if (auth()->user()->name == 'areeba'){
+//        if (auth()->user()->name == 'areeba'){
 //            $permission= Permission::create(['name'=>'Store-Access']);
 //            $role=Role::findByName('admin');
 //            $role->givePermissionTo($permission);
-           //Role::create(['name'=>'admin']);
-            auth()->user()->assignRole('admin'); //admin has create and edit permission
-        }
-        elseif (auth()->user()->name == 'nabiza'){
+//           Role::create(['name'=>'admin']);
+//            auth()->user()->assignRole('admin'); //admin has create and edit permission
+//        }
+//        elseif (auth()->user()->name == 'nabiza'){
 //            $role= Role::create(['name'=>'customer']);
 //            $permission= Permission::findByName('Store-Access');
 //            $role->givePermissionTo($permission);
-            auth()->user()->assignRole('customer');
-        }
+//            auth()->user()->assignRole('customer');
+//        }
         return view('welcome');
 
     }
 
     public function testingRoles(){
 //        $data= auth()->user();
-        //$role= Role::create(['name'=>'writer']); //change default guard in config/auth.php to api/web
-        $permission= Permission::create(['name'=>'Store-Access']);
-//        $role=Role::findByName('admin');
+        $role= Role::create(['name'=>'writer']); //change default guard in config/auth.php to api/web
+//        $permission= Permission::create(['name'=>'orko-access']);
+//        $permission= Permission::create(['name'=>'phase-access']);
+//        $role=Role::findByName('customer');
 //        $permission=Permission::findById(4);
-//        $role->givePermissionTo($permission); //1
+//        $role->givePermissionTo('orko-access');
+        //$role->givePermissionTo('phase-access'); //1
 ////        $permission->assignRole($role);
 ////        auth()->user()->givePermissionTo('create store'); //direct permission
 //        auth()->user()->assignRole('writer'); //2
@@ -59,6 +61,7 @@ class HomeController extends Controller
 //        $data= auth()->user()->getPermissionsViaRoles();
 ////        return User::role('admin')->get();
 
-       echo $permission;
+        //data=
+       echo $role;
     }
 }

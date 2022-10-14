@@ -31,6 +31,8 @@ Users Profile
                         <td class="text-center">
                             <a href="{{ url('/editUser')}}/{{$users->id}}"><button class="btn btn-primary btn-sm" >Edit</button></a>
                             <a href="{{url('/deleteUser')}}/{{$users->id}}"><button class="btn btn-danger btn-sm" >Delete</button></a>
+                            <a href="{{url('/api/getUserRoles')}}/{{$users->id}}"><button class="btn btn-info btn-sm" >Roles</button></a>
+
                         </td>
                     </tr>
                 @endforeach

@@ -58,7 +58,7 @@ Route::get('/editTwoCustomer/{id}','CustomerController@editTwo'); //open form fo
 //
 Route::post('/updateTwoCustomer/{id}', 'CustomerController@updateTwo');
 
-Route::get('/testingroles','HomeController@testingRoles');
+
 
 
 //Auth::routes();

@@ -22,11 +22,13 @@ class CustomerController extends Controller
                     if ($data->status == 1) return 'Online';
                     return 'Cancel';
                 })
+
                 ->addColumn('action', function($row){ //html
 
                     $btn =  '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="btn btn-primary btn-sm editCustomer">Edit</a>';
                     $btn =  $btn.'<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteCustomer">Delete</a>';
                     return $btn;
+
                 })
                 ->rawColumns(['action'])// html parse
                 ->make(true);

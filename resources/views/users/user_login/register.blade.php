@@ -1,11 +1,49 @@
-@extends('admin.layout.dashboard')
-@section('page-heading')
-    customer Registeration
-@endsection
+<!DOCTYPE html>
+<html lang="en">
+@include('admin.layout.header')
 
-@section('content')
+<body>
+<!-- Navbar -->
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
 
-    <div class="jumbotron vertical-center">
+    <!-- Right navbar links -->
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><div class="user-panel mt-1 pb-1 mb-1 d-flex">
+            </div>
+        </li>
+        <!-- Authentication Links -->
+        @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+            @if (Route::has('register'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                </li>
+            @endif
+            @else
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
+                @endguest
+    </ul>
+</nav>
+<div class="jumbotron vertical-center">
         <div class="row d-flex justify-content-center">
             <div class="col-md-5 col-lg-6" >
                 <div class="card shadow-0 border" style="background-color: #f0f2f5;">
@@ -28,6 +66,17 @@
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password" name="password"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="roles" class="col-sm-5 control-label">Select Roles</label>
+                                <div class="col-sm-12">
+                                    <select name="roles[]" id="roles">
+                                        @foreach($roles as $role)
+                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                            @endforeach
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -54,9 +103,9 @@
         </div>
     </div>
 
-@endsection
+</body>
 
-@section('custom-scripts')
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
@@ -99,4 +148,3 @@
 
     });
 </script>
-@endsection

@@ -26,24 +26,39 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::group(['middleware' => ['json.response','cors',]], function () {
+
     Route::middleware('auth:api')->get('/users','UserController@index')->name('users');
+
+    Route::middleware('auth:api')->post('/user-logout', 'UserController@userLogout')->name('logout');
+
+    Route::middleware('auth:api')->get('/getUserRoles/{id}','UserController@getUserRoles');
 
     Route::middleware('auth:api')->get('/dashboard', 'HomeController@index');
 
     //STORES
     Route::middleware('auth:api')->get('/getStores','StoreController@index')->name('stores.list');
+
+    //ROLES
+    Route::middleware('auth:api')->get('/getAllRoles','RoleController@index');
+
+    Route::middleware('auth:api')->get('/assignRoles/{id}','RoleController@assignRoles'); //open form
+
+    Route::middleware('auth:api')->post('/roleToStores/{id}','RoleController@roleToStores');
 });
 
 //Route::get('/users','UserController@index')->name('users')->middleware('auth:api');
 
 Route::group(['middleware' => ['cors']], function () {
+
     Route::post('/user-login', 'UserController@customLogin');
 
     Route::post('/user-register', 'UserController@customRegister');
 
-    Route::post('/user-logout', 'UserController@customRegister')->name('logout');
-
     Route::get('/testingroles','HomeController@testingRoles');
+
+    Route::get('/guzzleTesting','UserController@guzzleGetRequest');
+
+    Route::post('/guzzlePostRequest', 'UserController@guzzlePostRequest');
 });
 
 
